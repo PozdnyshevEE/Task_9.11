@@ -36,6 +36,22 @@ const personGenerator = {
         }
     }`,
 
+    firstNameFeMaleJson: `{
+        "count": 10,
+        "list": {     
+            "id_1": "Александра",
+            "id_2": "Анастасия",
+            "id_3": "Мария",
+            "id_4": "Ирина",
+            "id_5": "Виктория",
+            "id_6": "Светлана",
+            "id_7": "Валерия",
+            "id_8": "Наталия",
+            "id_9": "Екатерина",
+            "id_10": "София"
+        }
+    }`,
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -47,23 +63,30 @@ const personGenerator = {
         return obj.list[prop];
     },
 
+    randomGender: function() {
+        let result;
+        const prop = this.randomIntNumber();
+        prop ? result = this.GENDER_MALE : result = this.GENDER_FEMALE;
+        return result;
+    },
+
     randomFirstName: function() {
-
-        return this.randomValue(this.firstNameMaleJson);
-
+        if (this.randomGender() === 'Мужчина') {
+            return this.randomValue(this.firstNameMaleJson);
+        }
+        else {
+            return this.randomValue(this.firstNameFeMaleJson);
+        }
     },
 
 
     randomSurname: function() {
-
-        return this.randomValue(this.surnameJson);
-
-    },
-
-    randomGender: function() {
-        
-        return this.GENDER_FEMALE;
-
+        if (this.randomGender() === 'Мужчина') {
+            return this.randomValue(this.surnameJson);
+        }
+        else {
+            return this.randomValue(this.surnameJson) + 'а';
+        }
     },
 
 
