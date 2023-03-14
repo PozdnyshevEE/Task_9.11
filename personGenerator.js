@@ -52,6 +52,22 @@ const personGenerator = {
         }
     }`,
 
+    patronymicMaleJson: `{
+        "count": 10,
+        "list": {
+            "id_1": "Александрович",
+            "id_2": "Максимович",
+            "id_3": "Иванович",
+            "id_4": "Артемович",
+            "id_5": "Антонович",
+            "id_6": "Никитович",
+            "id_7": "Михайлович",
+            "id_8": "Данилович",
+            "id_9": "Егорович",
+            "id_10": "Владиславович"
+        }
+    }`,
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -66,12 +82,12 @@ const personGenerator = {
     randomGender: function() {
         let result;
         const prop = this.randomIntNumber();
-        prop ? result = this.GENDER_MALE : result = this.GENDER_FEMALE;
+        (prop === 1) ? result = this.GENDER_MALE : result = this.GENDER_FEMALE;
         return result;
     },
 
-    randomFirstName: function() {
-        if (this.randomGender() === 'Мужчина') {
+    randomFirstName: function(arg) {
+        if (arg === 'Мужчина') {
             return this.randomValue(this.firstNameMaleJson);
         }
         else {
@@ -79,9 +95,19 @@ const personGenerator = {
         }
     },
 
+    randomPatronymic: function(arg) {
+        if (arg === 'Мужчина') {
+            return this.randomValue(this.patronymicMaleJson);
+        }
+        else {
+            const temp = this.randomValue(this.patronymicMaleJson);
+            const result = temp.replaceAll('ич', 'на');
+            return result;
+        }
+    },
 
-    randomSurname: function() {
-        if (this.randomGender() === 'Мужчина') {
+    randomSurname: function(arg) {
+        if (arg === 'Мужчина') {
             return this.randomValue(this.surnameJson);
         }
         else {
@@ -90,11 +116,34 @@ const personGenerator = {
     },
 
 
+
+    randomYearOfBirth: function() {
+        let year = this.randomIntNumber(2023, 1950);
+        let months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        let month = this.randomIntNumber(11, 0);
+        let monthStr = months[month];
+        let day;
+        if (months[0] || months[2] || months[4] || months[6] || months[7] || months[9] || months[11]) {
+            day = this.randomIntNumber(31, 1);
+        }
+        else if(months[3] || months[5] || months[8] || months[10]) {
+            day = this.randomIntNumber(30, 1);
+        }
+        else {
+            day = this.randomIntNumber(28, 1);
+        }
+
+        return year + '/' + monthStr + '/' + day;
+    },
+
+
     getPerson: function () {
         this.person = {};
-        this.person.gender = this.randomGender();
-        this.person.firstName = this.randomFirstName();
-        this.person.surname = this.randomSurname();
+        const gen = this.person.gender = this.randomGender();
+        this.person.firstName = this.randomFirstName(gen);
+        this.person.surname = this.randomSurname(gen);
+        this.person.patronomic = this.randomPatronymic(gen);
+        this.person.yearOfBirth = this.randomYearOfBirth();
 
         return this.person;
     }
