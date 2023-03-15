@@ -1,0 +1,18 @@
+body {
+    background-image: url(https://www.ljplus.ru/img4/z/a/zarubin/onegin.jpg);
+    background-size: 100vw 100vh;
+
+}
+
+.card-header, .card-footer {
+    background-color: #a5d4c7;
+}
+
+.game-card {
+    height: 100vh;
+    font-family: 'Open Sans', monospace;
+}
+
+.card-body {
+    background-color: #FFDB8B;
+}
