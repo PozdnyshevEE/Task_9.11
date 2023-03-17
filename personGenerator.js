@@ -98,7 +98,7 @@ const personGenerator = {
     randomGender: function() {
         let result;
         const prop = this.randomIntNumber();
-        (prop === 1) ? result = this.GENDER_MALE : result = this.GENDER_FEMALE;
+        result = (prop === 1) ? this.GENDER_MALE : this.GENDER_FEMALE;
         return result;
     },
 
