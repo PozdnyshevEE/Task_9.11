@@ -52,22 +52,6 @@ const personGenerator = {
         }
     }`,
 
-    patronymicMaleJson: `{
-        "count": 10,
-        "list": {
-            "id_1": "Александрович",
-            "id_2": "Максимович",
-            "id_3": "Иванович",
-            "id_4": "Артемович",
-            "id_5": "Антонович",
-            "id_6": "Никитович",
-            "id_7": "Михайлович",
-            "id_8": "Данилович",
-            "id_9": "Егорович",
-            "id_10": "Владиславович"
-        }
-    }`,
-
     professionMaleJSON: `{
         "count": 10,
         "list": {
@@ -129,12 +113,34 @@ const personGenerator = {
 
     randomPatronymic: function(arg) {
         if (arg === 'Мужчина') {
-            return this.randomValue(this.patronymicMaleJson);
+            const temp = this.randomValue(this.firstNameMaleJson);
+            if (temp.endsWith('й')) {
+                let result = temp.replaceAll('й', 'евич');
+                return result; 
+            }
+            else if (temp.endsWith('а')) {
+                let result = temp.replaceAll('а', 'ович');
+                return result;
+            }
+            else {
+                let result = temp + 'ович';
+                return result;
+            }
         }
         else {
-            const temp = this.randomValue(this.patronymicMaleJson);
-            const result = temp.replaceAll('ич', 'на');
-            return result;
+            const temp = this.randomValue(this.firstNameMaleJson);
+            if (temp.endsWith('й')) {
+                let result = temp.replaceAll('й', 'евна');
+                return result; 
+            }
+            else if (temp.endsWith('а')) {
+                let result = temp.replaceAll('а', 'овна');
+                return result;
+            }
+            else {
+                let result = temp + 'овна';
+                return result;
+            }
         }
     },
 
